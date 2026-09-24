@@ -1,4 +1,4 @@
-﻿# Contribuir
+# Contribuir
 
 ## Commits en este repositorio
 
