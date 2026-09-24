@@ -135,13 +135,15 @@ pnpm test       # Run Vitest tests
 
 ### One-liner install (Cursor)
 
-Writes the portable entry into `~/.cursor/mcp.json` (or `%USERPROFILE%\.cursor\mcp.json` on Windows) without removing other servers:
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=vrchat-udon&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImdpdGh1YjpOZXVyYUxpdmUtTGFicy92cmMtdWRvbi1tY3AtbmxsYWJzIl19)
+
+One-click install opens Cursor and adds the portable `npx` entry. Or write it into `~/.cursor/mcp.json` (or `%USERPROFILE%\.cursor\mcp.json` on Windows) without removing other servers:
 
 ```bash
 npx -y github:NeuraLive-Labs/vrc-udon-mcp-nllabs -- install
 ```
 
-Optional: also Claude Desktop with `--claude`. Then **Refresh MCP** in Cursor.
+Optional: also Claude Desktop with `--claude`. Then **Refresh MCP** in Cursor (CLI install only).
 
 > **Do not use absolute paths** like `C:\Users\your-name\...` in MCP config.
 > They are not portable, expose your username, and break when you move the project.

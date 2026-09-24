@@ -38,13 +38,15 @@ MCP server for VRChat UdonSharp development — exposes the [agent-skills-vrc-ud
 
 ## Quick start
 
-**Install into Cursor MCP config** (portable `npx` entry, merge-safe):
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en/install-mcp?name=vrchat-udon&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImdpdGh1YjpOZXVyYUxpdmUtTGFicy92cmMtdWRvbi1tY3AtbmxsYWJzIl19)
+
+One-click install opens Cursor and adds the portable `npx` MCP entry. Or install from the CLI (merge-safe):
 
 ```bash
 npx -y github:NeuraLive-Labs/vrc-udon-mcp-nllabs -- install
 ```
 
-Then **Refresh MCP** in Cursor. Optional: add `--claude` for Claude Desktop.
+Then **Refresh MCP** in Cursor (CLI install only). Optional: add `--claude` for Claude Desktop.
 
 **Develop from source:**
 
@@ -73,11 +75,7 @@ See [docs/mcp-config.example.json](docs/mcp-config.example.json) and the languag
 
 ## Screenshots
 
-> Placeholder — add screenshots of MCP tools in Cursor, search results, or validation output here.
-
-| MCP connected in Cursor | `search_documentation` results |
-|-------------------------|--------------------------------|
-| _Screenshot pending_    | _Screenshot pending_           |
+Screenshots coming soon.
 
 ---
 
