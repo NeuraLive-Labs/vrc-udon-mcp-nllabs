@@ -1,0 +1,34 @@
+---
+description: Mandatory MCP-first workflow for accurate UdonSharp code generation
+globs: "**/*.{cs,usharp,md}"
+alwaysApply: true
+---
+
+# VRC Udon MCP — code precision
+
+When writing, reviewing, or fixing **UdonSharp / VRChat Udon** code, you MUST use the **vrchat-udon** MCP tools. Do not invent Udon APIs or networking patterns from general C# knowledge.
+
+## Required workflow (template → validate → fix)
+
+1. **Consult MCP before writing**
+   - `search_constraints` / `search_antipattern` — before using any C# feature you are unsure about
+   - `search_networking` — before any sync, ownership, or RPC work
+   - `list_templates` → `get_template` **or** `search_examples` — use as the **base**, then adapt
+2. **Write** by adapting the template/example (do not invent Manual sync / ownership / serialization flows)
+3. **`validate_code`** on the full script
+4. If issues: **`explain_validation`** for each unique `ruleId` → fix → **`validate_code` again** until clean
+
+## Hard constraints (never ignore)
+
+- No `List<T>`, `Dictionary`, LINQ, coroutines, async/await, generics as in full C#
+- Synced vars need ownership; prefer `BehaviourSyncMode.Manual` + `RequestSerialization()`
+- Prefer fixed arrays / Udon-safe types from constraints docs
+
+## Forbidden
+
+- Emitting UdonSharp from memory without MCP consultation
+- Skipping `validate_code` after writing or editing Udon code
+- Inventing networking instead of adapting `get_template` / `search_examples`
+---
+
+**Distribute:** copy this file to any project’s `.cursor/rules/udon-mcp.mdc`, or keep this MCP repo in the workspace (as with UdonMCP). Resource: `udon://workflow/code`.

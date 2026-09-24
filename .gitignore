@@ -13,4 +13,6 @@ data/indexes/
 data/cache/
 data/test-*/
 agent-skills-vrc-udon/
-.cursor/
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**

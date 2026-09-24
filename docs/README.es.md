@@ -20,6 +20,7 @@ Servidor [Model Context Protocol (MCP)](https://modelcontextprotocol.io) que exp
 - [Uso](#uso)
 - [Integración MCP](#integración-mcp)
 - [Herramientas MCP](#herramientas-mcp)
+- [Flujo de agente para código Udon preciso](#flujo-de-agente-para-código-udon-preciso)
 - [Recursos MCP](#recursos-mcp)
 - [Arquitectura](#arquitectura)
 - [Scripts](#scripts)
@@ -293,10 +294,23 @@ Configura un servidor MCP stdio con cualquiera de las opciones anteriores (evita
 
 ---
 
+## Flujo de agente para código Udon preciso
+
+Flujo obligatorio: **plantilla → validar → corregir**.
+
+1. Antes de codificar: `search_constraints` / `search_antipattern`, luego `get_template` o `search_examples` como base
+2. Adaptar (no inventar patrones de networking)
+3. `validate_code` → `explain_validation` por cada `ruleId` → corregir → revalidar
+
+Regla Cursor: [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) (copiar a proyectos). Recurso: `udon://workflow/code`.
+
+---
+
 ## Recursos MCP
 
 | URI | Contenido |
 |-----|-----------|
+| `udon://workflow/code` | Flujo fuerte plantilla→validar→corregir |
 | `udon://skills/{id}` | SKILL.md de cada skill |
 | `udon://rules/{id}` | Archivos de reglas |
 | `udon://sdk/matrix` | Matriz de versiones SDK |

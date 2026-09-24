@@ -18,7 +18,47 @@ export function createServer(container: ServiceContainer): McpServer {
   return server;
 }
 
+/** Strong agent workflow for accurate UdonSharp generation (template → validate → fix). */
+export const CODE_WORKFLOW_MARKDOWN = `# UdonSharp accurate code workflow
+
+Use the **vrchat-udon** MCP before writing UdonSharp. Do not invent APIs from general C#.
+
+## Steps
+
+1. **Constraints first** — \`search_constraints\` / \`search_antipattern\` before unfamiliar C# features.
+2. **Networking** — \`search_networking\` before sync, ownership, or RPC.
+3. **Base code** — \`list_templates\` → \`get_template\` and/or \`search_examples\`; **adapt**, do not invent Manual sync / ownership / \`RequestSerialization\`.
+4. **Validate** — \`validate_code\` on the full script.
+5. **Fix loop** — for each unique \`ruleId\`: \`explain_validation\` → fix → \`validate_code\` again until clean.
+
+## Hard constraints
+
+- No \`List<T>\`, Dictionary, LINQ, coroutines, async/await as in full C#
+- Synced vars need ownership; prefer \`BehaviourSyncMode.Manual\` + \`RequestSerialization()\`
+
+Cursor rule (copy into projects): \`.cursor/rules/udon-mcp.mdc\`
+`;
+
 function registerResources(server: McpServer, container: ServiceContainer): void {
+  server.resource(
+    'UdonSharp code workflow',
+    'udon://workflow/code',
+    {
+      description:
+        'Mandatory template→validate→fix workflow for accurate UdonSharp. Read before writing Udon code.',
+      mimeType: 'text/markdown',
+    },
+    async () => ({
+      contents: [
+        {
+          uri: 'udon://workflow/code',
+          mimeType: 'text/markdown',
+          text: CODE_WORKFLOW_MARKDOWN,
+        },
+      ],
+    }),
+  );
+
   const skills = container.skillService.listSkills();
   for (const skill of skills) {
     server.resource(

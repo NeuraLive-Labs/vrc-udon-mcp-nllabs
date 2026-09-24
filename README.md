@@ -62,11 +62,24 @@ See [docs/mcp-config.example.json](docs/mcp-config.example.json) and the languag
 
 ---
 
+## Agent workflow for accurate Udon code
+
+For precise UdonSharp, agents must follow **template ? validate ? fix** (not invent APIs from general C#):
+
+1. Consult MCP first: `search_constraints` / `search_antipattern`, then `get_template` or `search_examples` as the **base**
+2. Adapt the template (do not invent Manual sync / ownership / `RequestSerialization`)
+3. `validate_code` ? on failure, `explain_validation` per `ruleId` ? fix ? re-validate
+
+**Cursor rule (distributable):** [`.cursor/rules/udon-mcp.mdc`](.cursor/rules/udon-mcp.mdc) — copy into any project’s `.cursor/rules/`, or keep this repo / workspace with the MCP enabled. MCP resource: `udon://workflow/code`.
+
+---
+
 ## Table of contents
 
 - [Documentation](#documentation)
 - [What is this?](#what-is-this)
 - [Quick start](#quick-start)
+- [Agent workflow for accurate Udon code](#agent-workflow-for-accurate-udon-code)
 - [Contributing](#contributing)
 - [License](#license)
 

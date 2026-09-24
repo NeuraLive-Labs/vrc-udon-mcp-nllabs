@@ -37,16 +37,25 @@ export const ListTemplatesSchema = z.object({
 });
 
 export const GetTemplateSchema = z.object({
-  templateId: z.string().min(1).describe('Template identifier or filename'),
+  templateId: z
+    .string()
+    .min(1)
+    .describe('Template id/filename. Fetch BEFORE writing — adapt as base; do not invent networking.'),
 });
 
 export const ValidateCodeSchema = z.object({
-  code: z.string().min(1).describe('UdonSharp C# code to validate'),
+  code: z
+    .string()
+    .min(1)
+    .describe('Full UdonSharp C# to validate AFTER writing/editing. On failure: explain_validation → fix → re-validate.'),
   sdkVersion: z.string().optional(),
 });
 
 export const ExplainValidationSchema = z.object({
-  ruleId: z.string().min(1).describe('Validation rule ID from validate_code'),
+  ruleId: z
+    .string()
+    .min(1)
+    .describe('ruleId from validate_code issues. Call for each unique id in the fix loop.'),
 });
 
 export const SdkMatrixSchema = z.object({});
@@ -58,7 +67,10 @@ export const SearchSdkFeatureSchema = z.object({
 });
 
 export const SearchConstraintsSchema = z.object({
-  query: z.string().min(1).describe('Constraint to search (e.g. List<T>, Coroutine)'),
+  query: z
+    .string()
+    .min(1)
+    .describe('Constraint to check BEFORE using a C# feature (e.g. List<T>, Coroutine, LINQ)'),
   limit: z.number().int().min(1).max(50).optional().default(10),
 });
 
@@ -68,7 +80,10 @@ export const SearchNetworkingSchema = z.object({
 });
 
 export const SearchExamplesSchema = z.object({
-  query: z.string().min(1).describe('Search query for code examples'),
+  query: z
+    .string()
+    .min(1)
+    .describe('Find examples to use as BASE before writing UdonSharp (prefer over inventing APIs)'),
   limit: z.number().int().min(1).max(50).optional().default(10),
 });
 
@@ -78,7 +93,10 @@ export const SearchBestPracticeSchema = z.object({
 });
 
 export const SearchAntipatternSchema = z.object({
-  query: z.string().min(1).describe('Anti-pattern to search'),
+  query: z
+    .string()
+    .min(1)
+    .describe('Anti-pattern to check BEFORE using unfamiliar C# patterns in UdonSharp'),
   limit: z.number().int().min(1).max(50).optional().default(10),
 });
 

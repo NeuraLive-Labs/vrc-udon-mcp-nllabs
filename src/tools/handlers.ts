@@ -101,7 +101,11 @@ export function handleGetTemplate(container: ServiceContainer, input: GetTemplat
   if (!template) {
     return formatJson({ error: `Template not found: ${input.templateId}` });
   }
-  return formatJson(template);
+  return formatJson({
+    ...template,
+    agentGuidance:
+      'Adapt this template as your BASE — do not invent networking patterns (ownership, Manual sync, RequestSerialization). After adapting, call validate_code; if issues, explain_validation per ruleId then fix.',
+  });
 }
 
 export function handleValidateCode(container: ServiceContainer, input: ValidateCodeInput): string {
@@ -109,7 +113,28 @@ export function handleValidateCode(container: ServiceContainer, input: ValidateC
     input.code,
     input.sdkVersion ?? container.config.sdkVersion,
   );
-  return formatJson(result);
+  if (result.issues.length === 0) {
+    return formatJson({
+      ...result,
+      agentGuidance:
+        'Validation passed. Keep template/example networking patterns; re-run validate_code after further edits.',
+    });
+  }
+
+  const ruleIds = [...new Set(result.issues.map((i) => i.ruleId))];
+  const fixHints = result.issues
+    .filter((i) => i.suggestion)
+    .slice(0, 8)
+    .map((i) => `${i.ruleId}: ${i.suggestion}`);
+
+  return formatJson({
+    ...result,
+    agentGuidance: {
+      next: 'Suggested next: call explain_validation for each ruleId, apply fixes, then re-run validate_code.',
+      ruleIds,
+      fixHints,
+    },
+  });
 }
 
 export function handleExplainValidation(

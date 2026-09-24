@@ -20,6 +20,7 @@
 - [Usage](#usage)
 - [MCP integration](#mcp-integration)
 - [MCP tools](#mcp-tools)
+- [Agent workflow for accurate Udon code](#agent-workflow-for-accurate-udon-code)
 - [MCP resources](#mcp-resources)
 - [Architecture](#architecture)
 - [Scripts](#scripts)
@@ -290,10 +291,23 @@ Configure a stdio MCP server with any option above (avoid absolute paths with yo
 
 ---
 
+## Agent workflow for accurate Udon code
+
+Mandatory flow for agents writing UdonSharp: **template → validate → fix**.
+
+1. Before coding: `search_constraints` / `search_antipattern`, then `get_template` or `search_examples` as the base
+2. Adapt (do not invent networking patterns)
+3. `validate_code` → `explain_validation` per `ruleId` → fix → re-validate
+
+Cursor rule: [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) (copy into consumer projects). Resource: `udon://workflow/code`.
+
+---
+
 ## MCP resources
 
 | URI | Content |
 |-----|---------|
+| `udon://workflow/code` | Strong template→validate→fix agent workflow |
 | `udon://skills/{id}` | SKILL.md for each skill |
 | `udon://rules/{id}` | Rule files |
 | `udon://sdk/matrix` | SDK version matrix |

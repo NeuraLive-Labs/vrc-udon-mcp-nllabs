@@ -43,11 +43,12 @@ import {
 
 /**
  * Registers all repository-driven MCP tools.
+ * Descriptions tell agents WHEN/HOW to use each tool for accurate UdonSharp generation.
  */
 export function registerTools(server: McpServer, container: ServiceContainer): void {
   server.tool(
     'search_documentation',
-    'Search agent-skills-vrc-udon documentation with keyword, heading, and fuzzy matching',
+    'WHEN: before answering any Udon/VRChat docs question. HOW: keyword/fuzzy search the indexed agent-skills repo. Prefer this over inventing APIs from general C# knowledge.',
     SearchDocumentationSchema.shape,
     async (input) => ({
       content: [
@@ -61,7 +62,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'explain_topic',
-    'Explain a Udon/VRChat topic citing indexed repository sections with path and line numbers',
+    'WHEN: user needs a cited explanation of a Udon/VRChat topic. HOW: returns sections with path and line numbers — use citations, do not paraphrase away constraints.',
     ExplainTopicSchema.shape,
     async (input) => ({
       content: [
@@ -72,7 +73,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'list_skills',
-    'Auto-discover all skills from the repository',
+    'WHEN: starting an Udon session or discovering available skills. HOW: list skills from the repo before reading one with read_skill.',
     ListSkillsSchema.shape,
     async () => ({
       content: [{ type: 'text' as const, text: handleListSkills(container) }],
@@ -81,7 +82,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'read_skill',
-    'Read full SKILL.md with metadata, rules, references, and templates',
+    'WHEN: you need the full skill contract (rules, refs, templates). HOW: call after list_skills; follow linked rules before writing code.',
     ReadSkillSchema.shape,
     async (input) => ({
       content: [
@@ -92,7 +93,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'list_rules',
-    'List all UdonSharp rules from the repository',
+    'WHEN: you need the set of UdonSharp rules before coding. HOW: list then read_rule for any rule that applies to the feature.',
     ListRulesSchema.shape,
     async (input) => ({
       content: [
@@ -103,7 +104,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'read_rule',
-    'Read a rule with purpose, constraints, examples, and related rules',
+    'WHEN: implementing something covered by a named rule (constraints, networking, etc.). HOW: apply purpose/constraints/examples from the rule; do not skip constraints.',
     ReadRuleSchema.shape,
     async (input) => ({
       content: [
@@ -114,7 +115,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'search_reference',
-    'Search reference documentation in the repository',
+    'WHEN: looking up API/reference docs in references/. HOW: search before inventing method names or event signatures.',
     SearchReferenceSchema.shape,
     async (input) => ({
       content: [
@@ -128,7 +129,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'list_templates',
-    'List UdonSharp code templates from the repository',
+    'WHEN: about to write UdonSharp — first step of template→validate→fix. HOW: list .cs templates, then get_template for the closest match and adapt it.',
     ListTemplatesSchema.shape,
     async (input) => ({
       content: [
@@ -142,7 +143,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'get_template',
-    'Get a specific UdonSharp template with full source code',
+    'WHEN: before writing UdonSharp. HOW: use the returned source as the BASE — adapt fields/logic; do NOT invent networking (ownership, Manual sync, RequestSerialization). After adapting, call validate_code.',
     GetTemplateSchema.shape,
     async (input) => ({
       content: [
@@ -153,7 +154,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'validate_code',
-    'Validate UdonSharp code using rules parsed from the repository',
+    'WHEN: after writing or editing any UdonSharp script (mandatory). HOW: pass full code. If issues: call explain_validation for each unique ruleId, fix, then re-run validate_code until valid. Never ship code that failed validation.',
     ValidateCodeSchema.shape,
     async (input) => ({
       content: [
@@ -164,7 +165,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'explain_validation',
-    'Explain a validation failure by referencing the repository rule that caused it',
+    'WHEN: validate_code returned issues. HOW: call once per unique ruleId from the result, read the cited rule/docs, apply the fix, then re-run validate_code. Part of the fix loop — do not guess fixes.',
     ExplainValidationSchema.shape,
     async (input) => ({
       content: [
@@ -178,7 +179,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'sdk_matrix',
-    'Get SDK version matrix from repository documentation',
+    'WHEN: checking which APIs exist for a target SDK version. HOW: read the matrix before using version-specific features.',
     SdkMatrixSchema.shape,
     async () => ({
       content: [{ type: 'text' as const, text: handleSdkMatrix(container) }],
@@ -187,7 +188,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'search_sdk_feature',
-    'Search SDK features like NetworkCallable, PlayerData, PhysBones',
+    'WHEN: unsure if a feature (NetworkCallable, PlayerData, PhysBones, etc.) exists or how it works. HOW: search before coding against that feature.',
     SearchSdkFeatureSchema.shape,
     async (input) => ({
       content: [
@@ -201,7 +202,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'search_constraints',
-    'Search UdonSharp constraints (List<T>, Dictionary, Coroutine, etc.) with alternatives',
+    'WHEN: BEFORE using any C# feature in UdonSharp (List<T>, Dictionary, Coroutine, LINQ, async, generics, etc.). HOW: check constraints and use documented alternatives. Skipping this causes invalid Udon.',
     SearchConstraintsSchema.shape,
     async (input) => ({
       content: [
@@ -215,7 +216,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'search_networking',
-    'Search networking topics: ownership, sync modes, late joiners, serialization',
+    'WHEN: any ownership, sync mode, late joiners, serialization, or RPC work. HOW: search before writing synced fields; prefer Manual + RequestSerialization patterns from docs/templates.',
     SearchNetworkingSchema.shape,
     async (input) => ({
       content: [
@@ -229,7 +230,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'search_examples',
-    'Search UdonSharp code examples and patterns from the repository',
+    'WHEN: before writing UdonSharp (prefer with get_template). HOW: use matching examples as the code BASE — adapt, do not invent APIs or networking patterns. Then validate_code.',
     SearchExamplesSchema.shape,
     async (input) => ({
       content: [
@@ -243,7 +244,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'search_best_practice',
-    'Search recommended patterns and best practices',
+    'WHEN: refining structure, performance, or idiomatic UdonSharp. HOW: apply recommended patterns from the repo after drafting from a template.',
     SearchBestPracticeSchema.shape,
     async (input) => ({
       content: [
@@ -257,7 +258,7 @@ export function registerTools(server: McpServer, container: ServiceContainer): v
 
   server.tool(
     'search_antipattern',
-    'Search anti-patterns and common mistakes to avoid',
+    'WHEN: BEFORE using unfamiliar C# patterns or when validate_code fails with a common mistake. HOW: check anti-patterns to avoid; prefer documented alternatives.',
     SearchAntipatternSchema.shape,
     async (input) => ({
       content: [
