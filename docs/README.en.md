@@ -293,13 +293,19 @@ Configure a stdio MCP server with any option above (avoid absolute paths with yo
 
 ## Agent workflow for accurate Udon code
 
-Mandatory flow for agents writing UdonSharp: **template → validate → fix**.
+Works with **Cursor, Claude, Codex, ChatGPT** — not Cursor-only. Mandatory flow: **template → validate → fix**.
 
 1. Before coding: `search_constraints` / `search_antipattern`, then `get_template` or `search_examples` as the base
 2. Adapt (do not invent networking patterns)
 3. `validate_code` → `explain_validation` per `ruleId` → fix → re-validate
 
-Cursor rule: [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) (copy into consumer projects). Resource: `udon://workflow/code`.
+| Entry | Role |
+|-------|------|
+| [`AGENTS.md`](../AGENTS.md) | Canonical for Codex / file-based agents |
+| [`CLAUDE.md`](../CLAUDE.md) | Claude Code / Desktop |
+| `udon://workflow/code` | MCP SSOT for any client |
+| Prompt `udon-code-workflow` | Same workflow via MCP prompts |
+| [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) | Cursor-only bonus (mirrors AGENTS.md) |
 
 ---
 
@@ -307,7 +313,7 @@ Cursor rule: [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) (copy
 
 | URI | Content |
 |-----|---------|
-| `udon://workflow/code` | Strong template→validate→fix agent workflow |
+| `udon://workflow/code` | SSOT template→validate→fix workflow (aligned with AGENTS.md) |
 | `udon://skills/{id}` | SKILL.md for each skill |
 | `udon://rules/{id}` | Rule files |
 | `udon://sdk/matrix` | SDK version matrix |

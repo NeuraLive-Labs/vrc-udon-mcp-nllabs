@@ -32,7 +32,7 @@ MCP server for VRChat UdonSharp development â€” exposes the [agent-skills-vrc-ud
 | **18 MCP tools** | Search, explain, validate, templates, SDK matrix |
 | **Dynamic resources** | Skills, rules, cheatsheets, templates |
 | **Live indexing** | MiniSearch with weighted ranking + file watcher |
-| **IDE support** | Cursor, Claude Desktop, ChatGPT Desktop |
+| **IDE / agent support** | Cursor, Claude Desktop, ChatGPT Desktop, Codex — via MCP + `AGENTS.md` / `CLAUDE.md` |
 
 ---
 
@@ -64,13 +64,17 @@ See [docs/mcp-config.example.json](docs/mcp-config.example.json) and the languag
 
 ## Agent workflow for accurate Udon code
 
-For precise UdonSharp, agents must follow **template ? validate ? fix** (not invent APIs from general C#):
+Works with **Cursor, Claude, Codex, ChatGPT** (any MCP client). Same strong rules everywhere:
 
-1. Consult MCP first: `search_constraints` / `search_antipattern`, then `get_template` or `search_examples` as the **base**
-2. Adapt the template (do not invent Manual sync / ownership / `RequestSerialization`)
-3. `validate_code` ? on failure, `explain_validation` per `ruleId` ? fix ? re-validate
+| Entry | Role |
+|-------|------|
+| **[AGENTS.md](AGENTS.md)** | Canonical agent instructions (Codex, Cursor agents, …) |
+| **[CLAUDE.md](CLAUDE.md)** | Claude Code / Desktop project context |
+| MCP resource `udon://workflow/code` | SSOT summary any MCP client can fetch |
+| MCP prompt `udon-code-workflow` | Same workflow as a prompt (Claude-friendly) |
+| [`.cursor/rules/udon-mcp.mdc`](.cursor/rules/udon-mcp.mdc) | **Cursor-only** bonus; mirrors `AGENTS.md` |
 
-**Cursor rule (distributable):** [`.cursor/rules/udon-mcp.mdc`](.cursor/rules/udon-mcp.mdc) — copy into any project’s `.cursor/rules/`, or keep this repo / workspace with the MCP enabled. MCP resource: `udon://workflow/code`.
+Flow: **template ? validate ? fix** — consult MCP first (`search_constraints` / `search_networking` / `get_template` or `search_examples`), adapt (never invent networking), then `validate_code` ? `explain_validation` ? fix until clean.
 
 ---
 

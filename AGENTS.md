@@ -1,12 +1,4 @@
----
-description: Mandatory MCP-first workflow for accurate UdonSharp code generation
-globs: "**/*.{cs,usharp,md}"
-alwaysApply: true
----
-
-# VRC Udon MCP — code precision
-
-**Canonical text:** repo root [`AGENTS.md`](../../AGENTS.md). This Cursor rule mirrors it; do not diverge.
+# Agent instructions — VRC Udon MCP
 
 When writing, reviewing, or fixing **UdonSharp / VRChat Udon** code, you MUST use the **vrchat-udon** MCP tools. Do not invent Udon APIs or networking patterns from general C# knowledge.
 
@@ -32,6 +24,14 @@ When writing, reviewing, or fixing **UdonSharp / VRChat Udon** code, you MUST us
 - Skipping `validate_code` after writing or editing Udon code
 - Inventing networking instead of adapting `get_template` / `search_examples`
 
----
+## Cross-client entry points
 
-**Cursor-only:** this `.mdc` applies in Cursor. Other clients: `AGENTS.md`, `CLAUDE.md`, MCP resource `udon://workflow/code`, prompt `udon-code-workflow`.
+| Entry | Who uses it |
+|-------|-------------|
+| **This file (`AGENTS.md`)** | Codex, Cursor agents, any repo-aware agent — **canonical text** |
+| `CLAUDE.md` | Claude Code / Claude Desktop project context |
+| MCP resource `udon://workflow/code` | Any MCP client (Cursor, Claude, ChatGPT, …) |
+| MCP prompt `udon-code-workflow` | Clients that support MCP prompts |
+| `.cursor/rules/udon-mcp.mdc` | **Cursor-only** bonus; mirrors this file |
+
+Keep `udon://workflow/code` and this file aligned. Do not weaken the workflow for any client.

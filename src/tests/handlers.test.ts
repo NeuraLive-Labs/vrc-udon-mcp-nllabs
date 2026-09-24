@@ -75,5 +75,18 @@ public class ValidScript : UdonSharpBehaviour
     expect(CODE_WORKFLOW_MARKDOWN).toContain('template');
     expect(CODE_WORKFLOW_MARKDOWN).toContain('validate_code');
     expect(CODE_WORKFLOW_MARKDOWN).toContain('explain_validation');
+    expect(CODE_WORKFLOW_MARKDOWN).toContain('AGENTS.md');
+    expect(CODE_WORKFLOW_MARKDOWN).toContain('udon-code-workflow');
+  });
+
+  it('AGENTS.md stays aligned with MCP workflow SSOT', async () => {
+    const { readFile } = await import('node:fs/promises');
+    const { resolve } = await import('node:path');
+    const agents = await readFile(resolve(process.cwd(), 'AGENTS.md'), 'utf8');
+    expect(agents).toContain('validate_code');
+    expect(agents).toContain('explain_validation');
+    expect(agents).toContain('search_constraints');
+    expect(agents).toContain('udon://workflow/code');
+    expect(agents).toContain('udon-code-workflow');
   });
 });

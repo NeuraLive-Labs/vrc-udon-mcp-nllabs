@@ -296,13 +296,19 @@ Configura un servidor MCP stdio con cualquiera de las opciones anteriores (evita
 
 ## Flujo de agente para código Udon preciso
 
-Flujo obligatorio: **plantilla → validar → corregir**.
+Funciona con **Cursor, Claude, Codex, ChatGPT** — no solo Cursor. Flujo obligatorio: **plantilla → validar → corregir**.
 
 1. Antes de codificar: `search_constraints` / `search_antipattern`, luego `get_template` o `search_examples` como base
 2. Adaptar (no inventar patrones de networking)
 3. `validate_code` → `explain_validation` por cada `ruleId` → corregir → revalidar
 
-Regla Cursor: [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) (copiar a proyectos). Recurso: `udon://workflow/code`.
+| Entrada | Rol |
+|---------|-----|
+| [`AGENTS.md`](../AGENTS.md) | Canónico para Codex / agentes por archivo |
+| [`CLAUDE.md`](../CLAUDE.md) | Claude Code / Desktop |
+| `udon://workflow/code` | SSOT MCP para cualquier cliente |
+| Prompt `udon-code-workflow` | Mismo flujo vía prompts MCP |
+| [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) | Extra solo Cursor (espejo de AGENTS.md) |
 
 ---
 
@@ -310,7 +316,7 @@ Regla Cursor: [`.cursor/rules/udon-mcp.mdc`](../.cursor/rules/udon-mcp.mdc) (cop
 
 | URI | Contenido |
 |-----|-----------|
-| `udon://workflow/code` | Flujo fuerte plantilla→validar→corregir |
+| `udon://workflow/code` | SSOT plantilla→validar→corregir (alineado con AGENTS.md) |
 | `udon://skills/{id}` | SKILL.md de cada skill |
 | `udon://rules/{id}` | Archivos de reglas |
 | `udon://sdk/matrix` | Matriz de versiones SDK |
