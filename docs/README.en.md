@@ -23,6 +23,7 @@
 - [MCP resources](#mcp-resources)
 - [Architecture](#architecture)
 - [Scripts](#scripts)
+- [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
 
@@ -329,6 +330,12 @@ MCP Tools (18)             ← AI agent interface
 | `pnpm build-index` | Rebuild search index |
 | `pnpm lint` | ESLint |
 | `pnpm format` | Prettier |
+
+---
+
+## Contributing
+
+Forks and contributions are welcome. See [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
 
 ---
 

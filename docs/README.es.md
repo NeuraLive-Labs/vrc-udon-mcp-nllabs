@@ -23,6 +23,7 @@ Servidor [Model Context Protocol (MCP)](https://modelcontextprotocol.io) que exp
 - [Recursos MCP](#recursos-mcp)
 - [Arquitectura](#arquitectura)
 - [Scripts](#scripts)
+- [Contribuir](#contribuir)
 - [Créditos](#créditos)
 - [Licencia](#licencia)
 
@@ -332,6 +333,12 @@ MCP Tools (18)             ← Interfaz para el agente IA
 | `pnpm build-index` | Reconstruye índice de búsqueda |
 | `pnpm lint` | ESLint |
 | `pnpm format` | Prettier |
+
+---
+
+## Contribuir
+
+Cualquier fork y ayuda son bienvenidos. Ver [CONTRIBUTING.md](../CONTRIBUTING.md) para las pautas.
 
 ---
 

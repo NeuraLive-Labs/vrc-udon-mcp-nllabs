@@ -67,15 +67,16 @@ See [docs/mcp-config.example.json](docs/mcp-config.example.json) and the languag
 - [Documentation](#documentation)
 - [What is this?](#what-is-this)
 - [Quick start](#quick-start)
-- [Screenshots](#screenshots)
-- [Contributing](CONTRIBUTING.md)
+- [Contributing](#contributing)
 - [License](#license)
 
 ---
 
-## Screenshots
+## Contributing
 
-Screenshots coming soon.
+Forks and contributions are welcome. Cualquier fork y ayuda son bienvenidos.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
