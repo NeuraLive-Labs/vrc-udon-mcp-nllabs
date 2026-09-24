@@ -1,0 +1,21 @@
+{
+  "repository": {
+    "url": "https://github.com/niaka3dayo/agent-skills-vrc-udon",
+    "path": "./agent-skills-vrc-udon",
+    "branch": "main"
+  },
+  "sdkVersion": "3.10.4",
+  "language": "es",
+  "watch": true,
+  "indexPath": "./data/indexes",
+  "search": {
+    "fuzzy": 0.2,
+    "headingWeight": 3.0,
+    "titleWeight": 2.5,
+    "exampleWeight": 1.5,
+    "ruleWeight": 2.0,
+    "skillWeight": 2.5,
+    "cheatsheetWeight": 2.5,
+    "maxResults": 20
+  }
+}

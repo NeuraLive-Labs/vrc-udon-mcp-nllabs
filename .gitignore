@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+coverage/
+.idea/
+.vscode/
+*.tsbuildinfo
+data/indexes/
+data/cache/
+data/test-*/
+agent-skills-vrc-udon/
+.cursor/
